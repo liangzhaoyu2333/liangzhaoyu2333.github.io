@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>鸡鸡</title>
+  <meta name="description" content="智能识别古文、生僻字，让你上知天文下知地理">
+  <meta name="keywords" content="智能识别古文,生僻字">
+  <!-- Set render engine for 360 browser -->
+  <meta name="renderer" content="webkit">
+  <!-- No Baidu Siteapp-->
+  <meta http-equiv="Cache-Control" content="no-siteapp"/>
+  <link rel="icon" type="image/png" href="img/logo.png">
+  <!-- Add to homescreen for Chrome on Android -->
+  <meta name="mobile-web-app-capable" content="yes">
+  <link rel="icon" sizes="192x192" href="img/logo.png">
+  <!-- Add to homescreen for Safari on iOS -->
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  <meta name="apple-mobile-web-app-title" content="Amaze UI"/>
+  <link rel="apple-touch-icon-precomposed" href="assets/i/app-icon72x72@2x.png">
+  <!-- Tile icon for Win8 (144x144 + tile color) -->
+  <meta name="msapplication-TileImage" content="assets/i/app-icon72x72@2x.png">
+  <meta name="msapplication-TileColor" content="#0e90d2">
+  <link rel="stylesheet" href="amazeui.min.css">
+  <link rel="stylesheet" href="cropper.css">
+  <link rel="stylesheet" href="app.css">
+  <link rel="stylesheet" href="page.css">
+  <style>
+    .btn-camera{
+      position: relative;
+      margin:0 auto;
+    }
+    .btn-camera input[type="file"]{
+      position: absolute;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 35px;
+      opacity: 0;
+    }
+  </style>
+</head>
+<body class="main-bg">
+<div class="wrap" id="wrap">
+  <div class="am-g">
+    <img src="img/logo_share.png" width="0" height="0">
+    <div class="am-u-sm-12 img-con">
+      <div>
+        <img src="" height="172" width="169" id="word-img"/>
+      </div>
+    </div>
+  </div>
+  <div class="am-g">
+    <div class="title">
+      <hr>
+      <div>识别结果</div>
+    </div>
+  </div>
+  <div class="am-g am-hide" id="result-panel"></div>
+  <div class="am-g am-hide" id="noresult-panel">
+    <div class="am-u-sm-12 noresult-panel">
+      <div><img src="img/icon_failed.png" height="58" width="58"/>
+        <div>对不起，未识别出任何字</div>
+      </div>
+    </div>
+  </div>
+  <div class="btn-camera am-padding-bottom-sg">
+    <button class="am-btn am-btn-block am-btn-xl am-btn-transparent" id="reback-btn">再拍一张</button>
+    <input id="btn_album" type="file" accept="image/*" onchange="uploadImg(this)">
+  </div>
+  <div class="am-g am-padding-top-sm am-padding-bottom-lg">
+    <button class="am-btn am-btn-block am-btn-xl am-btn-transparent" id="toEdit">以上都不是，我知道</button>
+  </div>
+
+</div>
+<div class="paraphrase-note am-margin-top-sm" style="padding-left: 10px;padding-right: 10px">
+  中国美术学院<a href="http://zidian.shufa.com/">中国美术学院</a>中国美术学院
+</div>
+<div class="footer">
+  <div class="text-con"><span>哦</span><span>啊</span><span>呀</span><span>哎</span></div>
+  <div class="footer-img"><img src="img/logo.png" width="100%;"></div>
+</div>
+<div class="am-modal am-modal-prompt" tabindex="-1" id="my-prompt">
+  <div class="am-modal-dialog">
+    <div class="am-modal-hd">请裁剪出单个文字识别鸡</div>
+    <div class="am-modal-bd">
+      <img class="am-img-circle" id="img-view" src="" style="max-height:350px "/>
+      　<div class="am-alert am-hide" data-am-alert>
+      <p id="promp-msg"></p>
+    </div>
+    </div>
+    <div class="am-modal-footer">
+      <span class="am-modal-btn" data-am-modal-cancel>取消鸡</span>
+      <span class="upload-btn" id="upload-btn">识别鸡</span>
+    </div>
+  </div>
+</div>
+<div id="bg_wrap"></div>
+<script src="jquery.min.js"></script>
+<script src="amazeui.min.js"></script>
+<script src='alert.min.js'></script>
+<script src="cropper.min.js"></script>
+<script src="main.js"></script>
+<script type="text/javascript" src="jweixin-1.2.0.js"></script>
+<script type="text/javascript" src="wxshare.js"></script>
+<script>
+  document.write("<script type='text/javascript' src='//gss3.bdstatic.com/5foUcz3n1MgCo2Kml5_Y_D3/graph/static/resource/skill/skill.js?v=" + new Date().getTime() + "'><\/script>");
+</script>
+<script>
+  // API 加载后调用
+  window.BD_MMS_SKILL && window.BD_MMS_SKILL.initSkill({
+    tplName: 'skilllist', // 模板名字，必填
+    id: 'bg_wrap', // 容器id，必填
+    fontColor: '4b86f7', // 字体颜色，选填
+    bgColor: 'ebedf0' // 背景颜色，选填
+  });
+  function uploadImg(input) {
+    if (input.files && input.files[0]) {
+      //点击行为统计
+      window.BD_MMS_SKILL.sendLog();
+      $("#img-view").attr('src', getObjectURL(input.files[0]));
+      localStorage.setItem('url', getObjectURL(input.files[0]));
+      $("#promp-msg").parent().addClass('am-hide');
+      $('#my-prompt').modal({
+        relatedTarget: this,
+      });
+      startCropper()
+    }
+  }
+  var result=JSON.parse(localStorage.getItem('file'));
+  var url=localStorage.getItem('url');
+  var filename = getUrlParam('filename');
+  getResult();
+  $("#upload-btn").click(function () {
+    var cas=$("#img-view").cropper('getCroppedCanvas');
+    var pressCas=cas.toDataURL('image/jpeg',0.1);
+    var blob=convertBase64UrlToBlob(pressCas);
+    if(blob.size<=1048576){
+      uploadCropImg(blob);
+      $("#promp-msg").text('上传中...').parent().removeClass('am-hide').removeClass('am-alert-danger').addClass('am-alert-success')
+    }else{
+      $("#promp-msg").text('限制上传图片大小：1.0MB').parent().removeClass('am-hide').addClass('am-alert-danger')
+    }
+  })
+  function initResult(data) {
+    var filename=data.filename;
+    $("#toEdit").click(function(){
+      window.BD_MMS_SKILL.sendLog();
+      window.location.href='edit.html?filename='+filename
+    })
+    //$("#word-img").attr('src',url);
+    $("#word-img").attr('src','	https://api.shufashibie.com/resources/'+filename);
+    var list=data.list;
+    var html='';
+    var shtml='';
+    for(var i=0,len=list.length;i<len;i++){
+      var score=Number(list[i].score).toFixed(2);
+      var name=list[i].name.toString();
+      if(i==0){
+        html+='<div class="am-u-sm-5 am-padding-0">\
+          <div class="word-con" name="'+name+'" onclick="toDetail(this)">\
+          <div class="am-padding-top-lg">'+list[i].pinyin+'</div>\
+          <div class="am-padding-bottom-sm word">'+list[i].name+'</div>\
+          <div class="am-text-xs am-text-gray">'+score+'％</div>\
+        <div class="am-text-xs am-text-gray">可信度</div>\
+          </div>\
+          </div>'
+      }else{
+        shtml+='<div class="am-u-sm-6 am-padding-right-0 ">\
+         <div class="word-con am-margin-bottom-sm" name="'+name+'" onclick="toDetail(this)">\
+         <div class="word am-padding-bottom-xs">'+list[i].name+'</div>\
+          <div class="am-text-xs am-text-gray">'+score+'％</div>\
+         <div class="am-text-xs am-text-gray">可信度</div>\
+          </div>\
+          </div>'
+      }
+    }
+    $html=$(html+'<div class="am-u-sm-7">\
+    <div class="am-g wordList">\
+    '+shtml+'</div></div>'
+    )
+    $html.appendTo($("#result-panel"))
+    if(list.length==0){
+      $("#noresult-panel").removeClass('am-hide')
+    }else{
+      $("#result-panel").removeClass('am-hide')
+    }
+  }
+  function getResult() {
+    $.ajax({
+      url:'https://api.shufashibie.com/wz/share?filename='+filename,
+      type: 'get',
+    }).done(function (data) {
+      if(data.status==0){
+        initResult(data.result)
+      }else{
+        if(M.dialog1){
+          return M.dialog1.show();
+        }
+        M.dialog1 = jqueryAlert({
+          'content' : data.message,
+          'closeTime' : 2000,
+        })
+      }
+    })
+    //initResult(result)
+  }
+  function toDetail(obj) {
+    window.BD_MMS_SKILL.sendLog();
+    window.location.href='page.html?name='+$(obj).attr('name')+'&filename='+filename
+  }
+</script>
+</body>
+</html>

@@ -1,0 +1,175 @@
+html,body{
+  overflow-x: hidden;
+  overflow-y: auto;
+  font-size: 14px;
+  height: 100%;
+  width: 100%;
+}
+.page-content{
+  margin:0 auto;
+  min-height: 100%;
+  position: relative;
+}
+.page-black{
+  background-image: url('img/lovee.png'); /* 替换为你的图片路径 */
+  background-size: cover; /* 保证图片填满整个区域，保持原图比例 */
+  background-repeat: no-repeat; /* 图片不重复 */
+  background-position: center center; /* 图片居中显示 */
+
+  
+}
+/*起始页*/
+.div-desc{
+  text-align: center;
+  color:#fefb69;
+}
+.div-desc .img-logo {
+  width:21%;
+  margin-top:5rem
+}
+.div-desc .c-name {
+  font-size: 20px;
+  margin-top: 5%;
+  margin-bottom: 1%;
+}
+.div-desc .c-desc {
+  font-size: 14px;
+  padding-top: 1.3rem;
+  letter-spacing: 0.3rem;
+}
+.div-desc .c-name>img{
+  width: 28%;
+  vertical-align: text-bottom;
+}
+.camera-decs{
+  text-align: center;
+  position: absolute;
+  width: 100%;
+  font-size: 14px;
+  padding-bottom: 200px;
+  bottom: 0;
+}
+.btn-camera {
+  text-align: center;
+  position: absolute;
+  width: 100%;
+  bottom: 0;
+}
+.btn-camera .div-upload {
+  width: 16%;
+  margin:0 auto;
+  padding-bottom: 10%;
+  height: 0;
+  position: relative;
+}
+.btn-camera .btn-text {
+  width: 100%;
+  text-align: center;
+  position: absolute;
+  margin-top: -2.45rem;
+  font-size: 14px;
+}
+.btn-camera .icon-camera {
+  width: 100%;
+  margin: 0 auto;
+}
+.btn-camera .icon-camera>img{width: 100%;height: 100%;}
+.camera-con{
+  padding-top: 6rem;
+}
+.btn-album{
+  height: 60px;
+  position: relative;
+  margin:0 auto;
+  margin-top: 4%;
+  font-size: 14px;
+  /*color: #0e94ff;*/
+
+  /*background-color: #ddd;*/
+  /*box-shadow:0 -2px 4px 0 rgba(0,0,0,0.08);*/
+}
+.btn-album .div-upload{
+  width: 17%;
+  margin:0 auto;
+  padding-bottom: 13%;
+  height: 0;
+  position: relative;
+}
+.btn-album .btn-text {
+  width: 100%;
+  text-align: center;
+  position: absolute;
+  margin-top: -2.4rem;
+  font-size: 14px;
+}
+.icon-camera {
+  width: 100%;
+  margin: 0 auto;
+}
+.icon-camera>img{width: 100%;height: 100%;}
+.btn-album input[type="file"]{
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 49px;
+  opacity: 0;
+}
+.btn-camera .input-upload {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+  background-color: #5959ff;
+  -webkit-appearance:none;
+  -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+}
+.text-bottom{
+  padding-top: 0.6rem;
+}
+/*页面适配*/
+@media (min-width: 1200px) {
+  body{overflow-y: auto;}
+  .page-content,.page-about{
+    max-width: 375px;
+    min-height: 667px;
+  }
+}
+/*页面适配*/
+.am-icon-btn{
+  width: 35px;
+  height: 35px;
+  line-height: 35px;
+  margin: 0 auto;
+}
+.upload-btn {
+  display: table-cell!important;
+  padding: 0 5px;
+  height: 44px;
+  -webkit-box-sizing: border-box!important;
+  box-sizing: border-box!important;
+  font-size: 1.6rem;
+  line-height: 44px;
+  text-align: center;
+  color: #0e90d2;
+  display: block;
+  word-wrap: normal;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+  cursor: pointer;
+  border-right: 1px solid #dedede;
+}
+.am-modal-hd{
+  font-size: 15px;
+  padding: 10px 10px 10px 10px!important;
+}
+.am-modal-btn,.upload-btn{
+  font-size: 13px!important;
+}
+.am-alert{
+  margin-bottom:5px!important;
+  margin-top: 0!important;
+}

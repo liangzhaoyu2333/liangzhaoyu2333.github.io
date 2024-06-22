@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html class="no-js">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>字鉴.书法智能识别－没有我不认识的字迹</title>
+  <meta name="description" content="智能识别古文、生僻字，让你上知天文下知地理">
+  <meta name="keywords" content="智能识别古文,生僻字">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="renderer" content="webkit">
+  <meta http-equiv="Cache-Control" content="no-siteapp"/>
+  <link rel="icon" type="image/png" href="img/logo.png">
+  <link rel="stylesheet" href="amazeui.min.css">
+  <link rel="stylesheet" href="app.css">
+  <link rel="stylesheet" href="cropper.css">
+  <link rel="stylesheet" href="index.css">
+  <link rel="stylesheet" href="page.css">
+</head>
+<body>
+<div class="page-content page-black">
+  <div id="div_desc" class="div-desc">
+    <img src="img\logo_share.png.png" width="0" height="0">
+    <img class="img-logo" src="img\logo_new.png.png" alt="">
+    <!--<h2 class="c-name">字鉴.书法智能识别</h2>-->
+    <div class="c-desc">鸡鸡鸡鸡鸡鸡</div>
+    <div class="camera-con">
+      <div class="btn-album">
+        <div class="div-upload">
+          <div class="icon-camera">
+            <img src="img\camera.png.png">
+            <div class="btn-text">拍照</div>
+          </div>
+          <input class="input-upload" id="fileInput" onchange="uploadImg(this)" type="file" value="选择图片" capture="camera" accept="image/*">
+        </div>
+      </div>
+      <div class="btn-album">
+        <div class="div-upload">
+          <div class="icon-camera">
+            <img src="img\photo.png.png">
+            <div class="btn-text">照片</div>
+          </div>
+          <input id="btn_album" type="file" accept="image/*" onchange="uploadImg(this)">
+        </div>
+      </div>
+      <div class="text-bottom">及你太美</div>
+    </div>
+  </div>
+</div>
+<div class="am-modal am-modal-prompt" tabindex="-1" id="my-prompt">
+  <div class="am-modal-dialog">
+    <div class="am-modal-hd">请裁剪出单个文字识别</div>
+    <div class="am-modal-bd">
+      <img class="am-img-circle" id="img-view" src="" style="max-height:350px "/>
+      
+      <div class="am-alert am-hide" data-am-alert>
+        <p id="promp-msg"></p>
+      </div>
+    </div>
+    <div class="am-modal-footer">
+      <span class="am-modal-btn" data-am-modal-cancel>取消</span>
+      <span class="upload-btn" id="upload-btn">识别</span>
+    </div>
+  </div>
+</div>
+<div id="bg_wrap"></div>
+<script src="jquery.min.js"></script>
+<script src="amazeui.min.js"></script>
+<script src='alert.min.js'></script>
+<script src="cropper.min.js"></script>
+<script src="main.js"></script>
+<script type="text/javascript" src="jweixin-1.2.0.js"></script>
+<script type="text/javascript" src="wxshare.js"></script>
+<script>
+  var M = {};
+  $("#upload-btn").click(function () {
+    var cas = $("#img-view").cropper('getCroppedCanvas');
+    var pressCas = cas.toDataURL('image/jpeg', 0.1);
+    var blob = convertBase64UrlToBlob(pressCas);
+    if (blob.size <= 1048576) {
+      uploadCropImg(blob);
+      $("#promp-msg").text('上传中...').parent().removeClass('am-hide').removeClass('am-alert-danger').addClass('am-alert-success')
+    } else {
+      $("#promp-msg").text('限制上传图片大小：1.0MB').parent().removeClass('am-hide').addClass('am-alert-danger')
+    }
+  })
+</script>
+<script>
+  document.write("<script type='text/javascript' src='//gss3.bdstatic.com/5foUcz3n1MgCo2Kml5_Y_D3/graph/static/resource/skill/skill.js?v=" + new Date().getTime() + "'><\/script>");
+</script>
+<script>
+  // API 加载后调用
+  window.BD_MMS_SKILL && window.BD_MMS_SKILL.initSkill({
+    tplName: 'skilllist', // 模板名字，必填
+    id: 'bg_wrap', // 容器id，必填
+    fontColor: '4b86f7', // 字体颜色，选填
+    bgColor: 'f4f8ec' // 背景颜色，选填
+  });
+  //点击行为统计
+  function uploadImg(input) {
+    if (input.files && input.files[0]) {
+      window.BD_MMS_SKILL.sendLog();
+      $("#img-view").attr('src', getObjectURL(input.files[0]));
+      localStorage.setItem('url', getObjectURL(input.files[0]));
+      $("#promp-msg").parent().addClass('am-hide');
+      $('#my-prompt').modal({
+        relatedTarget: this,
+      });
+      startCropper()
+    }
+  }
+</script>
+</body>
+</html>
